@@ -1,7 +1,8 @@
 class Price {
 	constructor(
-		public amount: string,
-		public sector: string
+		public sector: string,
+		public amount: string
+		
 	){}
 }
 

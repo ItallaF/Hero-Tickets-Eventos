@@ -14,20 +14,20 @@ class App {
     this.interceptionsErro();
     connect();
   }
-  initializeRoutes(){
+  private initializeRoutes(){
     this.app.use('/events', this.eventRoutes.router);
   }
 
-  interceptionsErro(){
+  private interceptionsErro(){
     this.app.use(errorMiddleware);
   }
 
-  middlewaresInitialize(){
+  private middlewaresInitialize(){
   this.app.use(express.json());
   this.app.use(express.urlencoded({ extended: true }));
  }
-
-  listen(){
+ 
+ listen(){
     this.app.listen(3333, () => console.log('sever is running'));
   }
 }

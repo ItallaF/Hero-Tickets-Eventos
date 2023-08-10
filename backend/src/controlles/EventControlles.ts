@@ -9,7 +9,7 @@ class EventControlles {
 		const eventData = request.body;
 		try {
 			await this.eventUseCase.create(eventData);
-			return respose.status(201).json({ message: 'Evento criado com Sucesso!' })
+			return respose.status(201).json({ message: 'Evento criado com Sucesso!' });
 		} catch (error) {
 			next(error);
 		}
