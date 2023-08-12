@@ -16,20 +16,24 @@ class EventRoutes {
   }
   initRoutes() {
     this.router.post(
-			'/',
+      '/',
       upload.fields([
-       {
-        name: 'banner',
-        maxCount: 1
-       },
-       {
-        name: 'flyers',
-        maxCount: 3
-       }
-    ]),
-			this.eventControlles.create.bind(this.eventControlles),
-			);
-    }
+        {
+          name: 'banner',
+          maxCount: 1
+        },
+        {
+          name: 'flyers',
+          maxCount: 3
+        }
+      ]),
+      this.eventControlles.create.bind(this.eventControlles),
+    );
+    this.router.get('/', this.eventControlles.findEventByLocation.bind(this.eventControlles),
+    );
+    this.router.get('/category/:category', this.eventControlles.findEventsByCategory.bind(this.eventControlles),
+    );
+  }
 }
 
 export { EventRoutes };
