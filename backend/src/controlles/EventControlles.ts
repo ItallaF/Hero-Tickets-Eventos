@@ -2,14 +2,18 @@ import { NextFunction, Request, Response } from 'express';
 import { EventUseCase } from '../useCases/EventUseCase';
 
 class EventControlles {
-	constructor(private eventUseCase: EventUseCase){
+	constructor(private eventUseCase: EventUseCase) {
 
 	}
-	async create(request: Request, respose: Response, next: NextFunction) {
+	async create(
+		request: Request,
+		respose: Response,
+		next: NextFunction
+	) {
 		let eventData = request.body;
 		const files = request.files as any;
-		
-		if(files){
+
+		if (files) {
 			const banner = files.banner[0];
 			const flyers = files.flyers;
 
@@ -27,8 +31,13 @@ class EventControlles {
 			next(error);
 		}
 	}
-	async findEventByLocation( request: Request, response: Response, next: NextFunction){
-		const {latitude, longitude} = request.query;
+
+	async findEventByLocation(
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) {
+		const { latitude, longitude } = request.query;
 		try {
 			const events = await this.eventUseCase.findEventByLocation(
 				String(latitude),
@@ -39,14 +48,68 @@ class EventControlles {
 			next(error);
 		}
 	}
-	async findEventsByCategory( request: Request, response: Response, next: NextFunction){
+
+	async findEventsByCategory(
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) {
 		const { category } = request.params;
-		console.log("🚀 ~ file: EventControlles.ts:44 ~ EventControlles ~ findEventsByCategory ~ category:", category)
 		try {
 			const events = await this.eventUseCase.findEventsByCategory(
 				String(category),
 			)
 			return response.status(200).json(events)
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async findEventsByName(
+		request: Request,
+		response: Response,
+		next: NextFunction
+	) {
+		const { name } = request.query;
+
+		try {
+			const events = await this.eventUseCase.findEventsByName(
+				String(name),
+			)
+			return response.status(200).json(events)
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async findEventById(
+		request: Request,
+		response: Response,
+		next: NextFunction,
+	) {
+		const { id } = request.params;
+
+		try {
+			const events = await this.eventUseCase.findEventById(
+				String(id),
+			)
+			return response.status(200).json(events)
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async addParticipant(
+		request: Request,
+		response: Response,
+		next: NextFunction,
+	) {
+		const { name, email } = request.body;
+		const { id } = request.params;
+
+		try {
+			const events = await this.eventUseCase.addParticipant(id, name, email);
+			return response.status(200).json(events);
 		} catch (error) {
 			next(error);
 		}

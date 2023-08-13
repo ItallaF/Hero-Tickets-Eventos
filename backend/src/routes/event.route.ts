@@ -29,9 +29,24 @@ class EventRoutes {
       ]),
       this.eventControlles.create.bind(this.eventControlles),
     );
-    this.router.get('/', this.eventControlles.findEventByLocation.bind(this.eventControlles),
+    this.router.get(
+      '/',
+      this.eventControlles.findEventByLocation.bind(this.eventControlles
+      ),
     );
-    this.router.get('/category/:category', this.eventControlles.findEventsByCategory.bind(this.eventControlles),
+    this.router.get(
+      '/:id',
+      this.eventControlles.findEventById.bind(this.eventControlles
+      ),
+    );
+    this.router.get(
+      '/category/:category',
+      this.eventControlles.findEventsByCategory.bind(this.eventControlles
+      ),
+    );
+    this.router.post(
+      '/:id/participants',
+      this.eventControlles.addParticipant.bind(this.eventControlles),
     );
   }
 }
