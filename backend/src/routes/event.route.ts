@@ -35,6 +35,10 @@ class EventRoutes {
       ),
     );
     this.router.get(
+      '/filter',
+      this.eventControlles.filterEvents.bind(this.eventControlles),
+    );
+    this.router.get(
       '/:id',
       this.eventControlles.findEventById.bind(this.eventControlles
       ),
@@ -43,6 +47,10 @@ class EventRoutes {
       '/category/:category',
       this.eventControlles.findEventsByCategory.bind(this.eventControlles
       ),
+    );
+    this.router.get(
+      '/main',
+      this.eventControlles.findMainEvents.bind(this.eventControlles),
     );
     this.router.post(
       '/:id/participants',

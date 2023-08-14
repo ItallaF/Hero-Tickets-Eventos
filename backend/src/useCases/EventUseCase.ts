@@ -4,6 +4,16 @@ import { HTTPExceptions } from '../interfaces/HTTPExceptions';
 import { EventRepository } from '../repositories/EventRepository';
 import { UserRepositoryMongoose } from '../repositories/UserRepositoryMongoose';
 
+export interface IFilterProps {
+  latitude: number;
+  longitude: number;
+  name: string;
+  date: string;
+  category: string;
+  radius: number;
+  price: number;
+}
+
 class EventUseCase {
 	constructor(private eventRepository: EventRepository) { }
 	async create(eventData: Event) {
@@ -57,6 +67,33 @@ class EventUseCase {
 
 		return events;
 	}
+
+	async filterEvents({
+    latitude,
+    longitude,
+    name,
+    date,
+    category,
+    radius,
+    price,
+  }: IFilterProps){
+		const events = await this.eventRepository.findEventsByFilter({
+      latitude,
+      longitude,
+      name,
+      date,
+      category,
+      radius,
+      price,
+    });
+    return events;		
+	}
+
+	async findEventsMain() {
+    const events = await this.eventRepository.findEventsMain(new Date());
+
+    return events;
+  }
 
 	async findEventsByName(name: string) {
 		if (!name) throw new HTTPExceptions(400, 'Name is requered')

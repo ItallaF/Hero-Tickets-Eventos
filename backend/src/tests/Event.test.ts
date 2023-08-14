@@ -85,7 +85,7 @@ describe('Evet Test', () => {
 
 	it('/POST  event insert user', async () => {
     const response = await request(express)
-      .post('/events/64d7d69244f346e4bd4f5159/participants')
+      .post('/events/64d7d4ccf37b17f5282da1cd/participants')
       .send({
         name: 'Italla',
         email: crypto.randomBytes(10).toString('hex') + '@teste.com',
@@ -107,6 +107,8 @@ const eventRepository = {
 	findEventsByName: jest.fn(),
 	findEventById: jest.fn(),
 	update: jest.fn(),
+	findEventsByFilter: jest.fn(),
+	findEventsMain: jest.fn(),
 }
 const eventUseCase = new EventUseCase(eventRepository);
 const event: Event = {
@@ -123,7 +125,8 @@ const event: Event = {
 	date: new Date(),
 	participants: [],
 	banner: 'banner.png',
-	flyers: ['flyer01.png', 'flyer02.png']
+	flyers: ['flyer01.png', 'flyer02.png'],
+	formattedAddress: 'Address',
 };
 
 describe('Unit Test', () => {
@@ -142,7 +145,6 @@ describe('Unit Test', () => {
 	it('Shoul return an of events by name', async () => {
 		eventRepository.findEventsByName.mockResolvedValue([event]);
 		const result = await eventUseCase.findEventsByName('Jorge e Mateus');
-		console.log("🚀 ~ file: Event.test.ts:81 ~ it.only ~ result:", result)
 
 		expect(result).toEqual([event]);
 		expect(eventRepository.findEventsByName).toHaveBeenCalledWith('Jorge e Mateus');
@@ -151,7 +153,6 @@ describe('Unit Test', () => {
 	it('Shoul return a event by Id', async () => {
 		eventRepository.findEventById.mockResolvedValueOnce(event);
 		const result = await eventUseCase.findEventById('64d7d37b4bb9915090b92139');
-		console.log("🚀 ~ file: Event.test.ts:81 ~ it.only ~ result:", result)
 
 		expect(result).toEqual(event);
 		expect(eventRepository.findEventById).toHaveBeenCalledWith('64d7d37b4bb9915090b92139');

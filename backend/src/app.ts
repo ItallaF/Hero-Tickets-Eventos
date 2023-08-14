@@ -1,7 +1,9 @@
+import cors from 'cors';
 import express, { Application } from 'express';
 import { connect } from './infra/database';
 import { errorMiddleware } from './middlewares/error.middlewares';
 import { EventRoutes } from './routes/event.route';
+import path from 'node:path';
 
 class App {
   public app: Application;
@@ -14,20 +16,25 @@ class App {
     this.interceptionsErro();
     connect();
   }
-  private initializeRoutes(){
+  private initializeRoutes() {
     this.app.use('/events', this.eventRoutes.router);
   }
 
-  private interceptionsErro(){
+  private interceptionsErro() {
     this.app.use(errorMiddleware);
   }
 
-  private middlewaresInitialize(){
-  this.app.use(express.json());
-  this.app.use(express.urlencoded({ extended: true }));
- }
- 
- listen(){
+  private middlewaresInitialize() {
+    this.app.use(express.json());
+    this.app.use(cors());
+    this.app.use(
+      '/uploads',
+      express.static(path.join(__dirname, './tmp/uploads')),
+    );
+    this.app.use(express.urlencoded({ extended: true }));
+  }
+
+  listen() {
     this.app.listen(3333, () => console.log('sever is running'));
   }
 }

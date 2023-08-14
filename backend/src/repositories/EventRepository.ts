@@ -1,5 +1,6 @@
 import { Event } from '../entities/Event';
 import { Location } from '../entities/Location';
+import { IFilterProps } from '../useCases/EventUseCase';
 
 interface EventRepository {
   add(event: Event): Promise<Event>;
@@ -11,7 +12,18 @@ interface EventRepository {
 		findEventsByCategory(category: string): Promise<Event[]>;
 		findEventsByName(name: string): Promise<Event[]>;
 		findEventById(id: string): Promise<Event | undefined>;
+		findEventsByFilter({
+			latitude,
+			longitude,
+			name,
+			date,
+			category,
+			radius,
+			price,
+		}: IFilterProps): Promise<Event[]>;
+		findEventsMain(date: Date): Promise<Event[]>;
 		update(event: Event, id: string): Promise<any>;
+		
 }
 
 export { EventRepository }
