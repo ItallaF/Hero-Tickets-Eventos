@@ -1,9 +1,10 @@
 import cors from 'cors';
 import express, { Application } from 'express';
+import path from 'node:path';
 import { connect } from './infra/database';
 import { errorMiddleware } from './middlewares/error.middlewares';
 import { EventRoutes } from './routes/event.route';
-import path from 'node:path';
+
 
 class App {
   public app: Application;

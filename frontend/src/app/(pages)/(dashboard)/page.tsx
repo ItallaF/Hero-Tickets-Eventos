@@ -1,31 +1,37 @@
 import { BannerPrimary } from "@/app/components/BannerPrimary";
-import { BannerSecundary } from "@/app/components/BannerSecondary";
+import { BannerSecondary } from "@/app/components/BannerSecondary";
 import { categories } from "@/app/utils/categories";
+import { fetchWrapper } from "@/app/utils/fetchWrapper";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const response = await fetchWrapper('/events/main', {
+    method: 'GET',
+  });
+  console.log('🚀 ~ file: page.tsx:10 ~ Dashboard ~ response:', response);
+  const secondareResponse = response.slice(1);
+  console.log('response', response);
   return (
     <div className="container mx-auto">
-      <BannerPrimary />
-      <div>
-        <div className="p-2 text-blue ml-4">
-          <p className="text-2xl font-medium">Eventos em Destaques</p>
-          <p className="text-base font-light">Se divirta com os principais eventos de Minas Gerais e do Brasil!</p>
-        </div>
-        <div className="grid grid-cols-3 gap-4 mb-4 w-[1160px]">
-          <BannerSecundary />
-          <BannerSecundary />
-          <BannerSecundary />
-        </div>
+      <BannerPrimary events={response[0]} />
+      <div className="p-2 text-blue ">
+        <p className="text-2xl font-medium">Eventos em Destaque</p>
+        <p className="text-base font-light">
+          Se divirta com os principais eventos de Minas Gerais e do Brasil!
+        </p>
       </div>
-      <div className="p-2 text-blue ml-4">
+      <div className="grid grid-cols-3 gap-4 mb-4">
+        {secondareResponse.map((event: any) => (
+          <BannerSecondary event={event} />
+        ))}
+      </div>
+      <div className="p-2 text-blue ">
         <p className="text-2xl font-medium">Navegue por tipo de evento</p>
         <p className="text-base font-light">Vá ao evento que é a sua cara :D</p>
       </div>
-      <div className=""></div>
-      <div className="grid md:grid-cols-7 grid-cols-2 lg:gap-2  sm:gap-1 w-[1196px]">
+      <div className="grid md:grid-cols-7 grid-cols-2 lg:gap-2 sm:gap-1">
         {categories.map((categorie) => {
           return (
-            <div className="flex flex-col gap-0 items-center justify-center cursor-pointer">
+            <div className="flex flex-col items-center justify-center cursor-pointer">
               <img src={categorie.icon} alt="" className="rounded-full" />
               <p>{categorie.name}</p>
             </div>
