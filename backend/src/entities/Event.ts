@@ -3,8 +3,8 @@ import { Price } from './Price';
 import { User } from './user';
 
 class Event {
-	constructor(
-		public title: string,
+  constructor(
+    public title: string,
     public location: Location,
     public date: Date,
     public description: string,
@@ -16,7 +16,6 @@ class Event {
     public city: string,
     public categories: string[],
     public formattedAddress: string,
-		) {}
+  ) {}
 }
-
-export { Event }
+export { Event };
