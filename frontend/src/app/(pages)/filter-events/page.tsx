@@ -29,9 +29,9 @@ export default function FilterEvents() {
   const getEvents = async (data: any) => {
     const response = await fetchWrapper(
       `/events/filter?` +
-        new URLSearchParams({
-          name: data.name,
-        }),
+      new URLSearchParams({
+        name: data.name,
+      }),
       { method: 'GET' },
     );
     setEvents(response);
@@ -46,15 +46,15 @@ export default function FilterEvents() {
     console.log('🚀 ~ file: page.tsx:30 ~ onSubmit ~ data', data);
     const response = await fetchWrapper(
       `/events/filter?` +
-        new URLSearchParams({
-          name: data.name,
-          categories: data.categories,
-          price: data.price,
-          date: data.date,
-          latitude: String(data.latitude),
-          longitude: String(data.longitude),
-          radius: data.radius,
-        }),
+      new URLSearchParams({
+        name: data.name,
+        categories: data.categories,
+        price: data.price,
+        date: data.date,
+        latitude: String(data.latitude),
+        longitude: String(data.longitude),
+        radius: data.radius,
+      }),
       { method: 'GET' },
     );
     setEvents(response);
